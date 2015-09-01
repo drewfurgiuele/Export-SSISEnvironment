@@ -1,4 +1,35 @@
 ﻿<#
+.SYNOPSIS
+    Copies SSIS environment variables from one projec to another.
+.DESCRIPTION
+    This script will find all environment variables in a given folder inside a SSIS project and copy them to a target folder on the same (or any different) server.
+.PARAMETER SourceServerName
+    Aliases: ss
+    The hostname of the SQL server you want to copy from. This is a required parameter.
+.PARAMETER SourceInstanceName
+    Aliases: si
+    The instance name of the SQL server you want to copy from. Default value is "DEFAULT" for non-named SQL instances. This is an optional parameter.
+.PARAMETER SourceFolder
+    Aliases: sf
+    The name of the integration services folder you want copy the environment variables from.
+.PARAMETER SourceEnvironment
+    Aliases: se
+    The name of the environment you want to copy. This is an optional parameter; if left blank, all environments will be copied.
+.PARAMETER TargetServer
+    Aliases: ts
+    Tha name of the server you want to copy the environment (variables) to.
+.PARAMETER TargetInstance
+    Aliases: ti
+    The instance name of the SQL server you want to copy to. Default value is "DEFAULT" for non-named SQL instances. This is an optional parameter.
+.PARAMETER TargetFolder
+    Aliases: tf
+    The name of the folder on the target SQL Server you want to copy the environment variables to. This is an optional parameter. If left off, it will copy the environment (variables) to same name as the source folder
+.EXAMPLE
+    Connect to a SQL server local instance of SQL Server and copy all the environments (and contained variables) from the folder 'ProjectFolder' to the remote server's integration services catalog in the same folder name.
+    .\Export-SSISEnvironment.ps1 -SourceServer localhost -SourceFolder ProjectFolder -TargetServer remoteserver
+.OUTPUTS
+    None, unless -VERBOSE is specified. In fact, -VERBOSE is reccomended so you can see what is happening and when.
+.NOTES
 #>
 param(
     [Alias("ss")] [Parameter(Mandatory=$true)]  [string]$SourceServer,
